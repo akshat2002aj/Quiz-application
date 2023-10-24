@@ -21,7 +21,9 @@ import UserHomePage from "./Pages/UserHomePage";
 import AdminQuizPage from "./Pages/AdminQuizPage";
 import AdminUserPage from "./Pages/AdminUserPage";
 import UserQuizViewPage from "./Pages/UserQuizViewPage";
-
+import PageNotFound from "./Pages/404Page";
+import ThankYouPage from "./Pages/ThankYouPage";
+import AdminUpdatePasswordPage from "./Pages/AdminUpdatePasswordPage";
 function App() {
   const { loading, user } = useSelector((state) => state.auth);
 
@@ -46,7 +48,7 @@ function App() {
                   <UserHomePage />
                 </ProtectedRoute>
               }
-            />            
+            />
             <Route
               path="/quiz/:id"
               element={
@@ -127,6 +129,15 @@ function App() {
                 </AdminProtectedRoute>
               }
             />
+            <Route
+              path="/admin-update-password"
+              element={
+                <AdminProtectedRoute>
+                  <AdminUpdatePasswordPage />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
           <Toaster position="bottom-center" reverseOrder={false} />
         </BrowserRouter>

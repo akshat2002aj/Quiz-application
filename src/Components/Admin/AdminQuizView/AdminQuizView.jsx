@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { SERVER } from "../../../Server";
+import Loading from "../../Layout/Loading/Loading";
 
 const AdminQuizView = ({ quiz }) => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handlePublish = async (e) => {
     e.preventDefault();
-    console.log(1);
+    setLoading(true);
     try {
       await axios.put(
         `${SERVER}/quiz/publish/${quiz._id}`,
@@ -22,10 +24,11 @@ const AdminQuizView = ({ quiz }) => {
       } else {
         toast.success("Quiz Published!");
       }
-
-      navigate("/admin-dashboard");
+      navigate(`/admin-quiz`);
+      setLoading(false)
     } catch (error) {
-      console.log(error);
+      setLoading(false);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -42,7 +45,7 @@ const AdminQuizView = ({ quiz }) => {
   }
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center relative">
       <div className="self-end mr-4 md:mr-[5rem] rounded-full ">
         {!quiz.published ? (
           <button
@@ -131,6 +134,9 @@ const AdminQuizView = ({ quiz }) => {
           </div>
         </div>
       </div>
+      {
+        loading ? <Loading /> : null
+      }
     </div>
   );
 };

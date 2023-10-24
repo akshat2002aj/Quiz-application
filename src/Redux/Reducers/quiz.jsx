@@ -2,7 +2,9 @@ import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: true,
-  loader: true
+  loader: true,
+  load: true,
+  submitted: false
 };
 
 export const quizReducer = createReducer(initialState, {
@@ -42,6 +44,20 @@ export const quizReducer = createReducer(initialState, {
   },
   startQuizFailed: (state, action) => {
     state.loader = false;
+    state.error = action.payload;
+  },
+
+  // start quiz
+  submitQuizRequest: (state) => {
+    state.load = true;
+  },
+  submitQuizSuccess: (state, action) => {
+    state.load = false;
+    state.result = action.payload;
+    state.submitted = true;
+  },
+  submitQuizFailed: (state, action) => {
+    state.load = false;
     state.error = action.payload;
   },
 

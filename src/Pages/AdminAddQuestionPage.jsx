@@ -17,7 +17,7 @@ const AdminAddQuestionPage = () => {
   }, []);
   
   return (
-    <div>
+    <div className="relative">
       <Header />
       <div className="w-full flex">
         <div className="flex items-start justify-between w-full mt-[4rem]">

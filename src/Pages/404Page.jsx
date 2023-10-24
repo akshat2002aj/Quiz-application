@@ -1,9 +1,9 @@
 import React from "react";
 import Lottie from "react-lottie";
-import animationData from "../../../Assets/load.json";
+import animationData from "../Assets/404.json";
 
 
-const Loading = () => {
+const PageNotFound = () => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -13,10 +13,10 @@ const Loading = () => {
     },
   };
   return (
-    <div className="w-full h-screen flex items-center justify-center absolute z-10 bg-transparent">
+    <div className="w-full h-screen flex items-center justify-center">
       <Lottie options={defaultOptions} width={500} height={500} />
     </div>
   );
 };
 
-export default Loading;
+export default PageNotFound;

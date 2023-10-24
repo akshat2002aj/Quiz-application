@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -28,9 +28,9 @@ export default function Register() {
     }
   }
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center h-screen bg-white relative">
       <div className="bg-gray-300 rounded-3xl px-4 md:p-12 shadow-2xl w-full md:w-[36rem] h-[30rem] m-5 py-12">
-        <h2 className="text-3xl font-semibold text-gray-700 mb-4 text-center">Create User</h2>
+        <h2 className="text-3xl font-semibold text-gray-700 mb-4 text-center">Register</h2>
         <form onSubmit={handleRegister}>
           <div className="mb-4">
             <label
@@ -64,7 +64,7 @@ export default function Register() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="password"
               className="block text-gray-700 font-bold mb-2"
@@ -80,11 +80,14 @@ export default function Register() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <div >
+            <Link to="/login" ><p className="text-gray-700 font-semibold">Already Registered ? <span className="hover:underline">Login Now</span></p></Link>
+          </div>
           <div className="flex items-center justify-center md:justify-between">
             {/* <Link to="/home"> */}
             <button
               type="submit"
-              className="shadow-2xl bg-indigo-600  hover:bg-white text-white hover:text-indigo-600 font-bold py-2 px-4 rounded-xl focus:outline"
+              className="shadow-2xl bg-indigo-600 mt-4  hover:bg-white text-white hover:text-indigo-600 font-bold py-2 px-4 rounded-xl focus:outline"
             >
               Create User
             </button>

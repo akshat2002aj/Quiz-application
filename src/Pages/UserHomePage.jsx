@@ -15,7 +15,7 @@ const UserHomePage = () => {
   return (
     <div>
       <Header />
-        <div className="mt-[4rem] md:w-full flex flex-col justify-center w-[80%]">  
+        <div className="mt-[4rem] ml-[2rem] md:ml-0  md:w-full flex flex-col justify-center w-[80%]">  
             {isLoading ? <Loader /> : <UserHome allQuiz={allQuiz} />}
         </div>
     </div>

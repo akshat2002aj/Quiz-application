@@ -5,7 +5,8 @@ import { Formik, Form, yupToFormErrors } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Input from "../../Input/Input";
-import {toast} from 'react-hot-toast'
+import {toast} from 'react-hot-toast';
+import Loading from "../../Layout/Loading/Loading";
 
 const validationSchema = Yup.object().shape({
   description: Yup.string().trim().required("Description is required"),
@@ -71,6 +72,7 @@ const AdminAddQuestion = ({ quiz }) => {
     correctoption: "",
   };
   const [question, setQuestion] = useState(emptyElement);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
@@ -83,6 +85,7 @@ const AdminAddQuestion = ({ quiz }) => {
   };
 
   const handleSubmit = async (values, {setSubmitting}) => {
+    setLoading(true);
     const data = {
         description: values.description,
       imageDescription: values.imgdescp,
@@ -114,14 +117,14 @@ const AdminAddQuestion = ({ quiz }) => {
         { withCredentials: true }
       );
       // console.log(d);
-      toast.success("Quiz created successfully!")
+      toast.success("Question created successfully!")
       navigate(`/admin-quiz-question/${quiz._id}`)
       setSubmitting(true)
-      // console.log(data[0])
-      // navigate(`/quiz/${da._id}/admin-view-question`);
+      setLoading(false)
     } catch (error) {
       toast.error(error?.response?.data?.message);
       setSubmitting(true)
+      setLoading(false)
     }
   };
 
@@ -147,7 +150,7 @@ const AdminAddQuestion = ({ quiz }) => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-4">
+    <div className="flex items-center justify-center mt-4 ">
       <div className="flex-col items-center justify-center">
         <div className="bg-gray-300 rounded-xl p-6 md:p-8 w-[90%] m-4 shadow-xl md:w-[36rem]  ">
           <h1 className="font-bold text-transform: uppercase text-3xl text-gray-800 mb-4 flex justify-center border-b-2 border-black pb-4">
@@ -455,6 +458,9 @@ const AdminAddQuestion = ({ quiz }) => {
           </Formik>
         </div>
       </div>
+      {
+        loading ? <Loading /> : null
+      }
     </div>
   );
 };

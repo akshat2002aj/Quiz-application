@@ -51,7 +51,7 @@ const AdminQuestionView = (props) => {
                     </div>
                   )}
                 </div>
-
+                <div>
                 {props.questions[currentQuestion].options.map(
                   (option, index) => (
                     <label
@@ -71,8 +71,15 @@ const AdminQuestionView = (props) => {
                         </div>
                       )}
                     </label>
+
                   )
                 )}
+                </div>
+
+                <div className="block text-gray-800 font-bold text-base md:text-lg rounded-lg md:py-3 md:px-3 px-2 py-2 my-4">
+                  <span className="text-bold text-[crimson] mr-3">Correct Option:</span>{props.questions[currentQuestion].correctOption}
+                </div>
+                
               </div>
 
               <div className="flex flex-row justify-between w-full md:hidden">

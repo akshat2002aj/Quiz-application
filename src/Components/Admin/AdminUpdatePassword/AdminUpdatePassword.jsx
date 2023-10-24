@@ -1,31 +1,30 @@
+import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import { SERVER } from "../../Server";
-import Loading from "../Layout/Loading/Loading";
-import {Link} from "react-router-dom"
+import {toast} from 'react-hot-toast'
+import Loading from "../../Layout/Loading/Loading";
 
-export default function Login() {
+export default function AdminUpdatePassword() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const handleLogin = async (e) => {
     setLoading(true);
     e.preventDefault();
-
     try {
       const data = await axios.post(
-        `${SERVER}/user/login-user`,
+        "https://treasure-hunt-tcb7.onrender.com/api/v1/user/change-password",
         {
           email,
           password,
         },
         { withCredentials: true }
       );
-      navigate("/");
-      toast.success("Login Success!");
+      toast.success("Password updated successfully")
+      navigate(`/admin-user`)
       setLoading(false)
     } catch (error) {
       setLoading(false)
@@ -33,10 +32,10 @@ export default function Login() {
     }
   };
   return (
-    <div className="flex items-center justify-center h-screen bg-white relative">
-      <div className="bg-gray-300 rounded-3xl px-4 md:p-12 shadow-2xl w-[40rem] h-[25rem] m-5 py-8">
-        <h2 className="text-3xl font-semibold text-gray-700 mb-5 text-center mt-2 md:mt-0">
-          Login
+    <div className="flex items-center justify-center mt-[2rem]">
+      <div className="bg-gray-300 rounded-3xl px-4  py-12 md:p-12 shadow-2xl w-full md:w-[38rem] m-5 h-[30rem]">
+        <h2 className="text-3xl font-semibold text-gray-700 mb-5 text-center">
+          Update Password
         </h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
@@ -55,40 +54,53 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-6">
             <label
-              htmlFor="password"
+              htmlFor="newpassword"
               className="block text-gray-700 font-bold mb-2"
             >
-              Password
+              New Password
             </label>
             <input
               type="password"
-              id="password"
+              id="newpassword"
               className="shadow-xl appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline bg-gray-100 focus:bg-white"
-              placeholder="Password"
+              placeholder="New Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div >
-            <Link to="/register" ><p className="text-gray-700 font-semibold">New User ? <span className="hover:underline">Register Now</span></p></Link>
+          <div className="mb-6">
+            <label
+              htmlFor="confirmpassword"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmpassword"
+              className="shadow-xl appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline bg-gray-100 focus:bg-white"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
           </div>
-          <div className="flex mt-3 items-center justify-center md:justify-between">
+          <div className="flex items-center justify-center md:justify-between">
             {/* <Link to="/home"> */}
             <button
               type="submit"
-              disabled={loading}
-              className="shadow-2xl bg-indigo-600 hover:bg-white hover:text-indigo-600 text-white font-bold py-2 px-6 rounded-xl focus:outline "
+              className="shadow-2xl  bg-indigo-600 hover:bg-white hover:text-indigo-600 text-white font-bold py-2 px-4 rounded-xl focus:outline"
+              onClick={(e) => handleLogin(e)}
             >
-              Sign In
+              Update
             </button>
             {/* </Link> */}
           </div>
         </form>
       </div>
       {
-        loading ? (<Loading />) :(null)
+        loading ? <Loading /> : null
       }
     </div>
   );

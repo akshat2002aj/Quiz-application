@@ -4,47 +4,45 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { useNavigate, Link } from "react-router-dom";
-import '../../../App.css'
+import "../../../App.css";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Input from "../../Input/Input";
 import { toast } from "react-hot-toast";
+import Loading from "../../Layout/Loading/Loading";
 
 const validationSchema = Yup.object({
   name: Yup.string().trim().required("Name is required"),
   description: Yup.string().trim().required("Description is required"),
-  duration: Yup.number().required('Duration is required')
+  duration: Yup.number().required("Duration is required"),
+  image: Yup.string().required("Image is required"),
+  startTime: Yup.date().required("Start time is required!"),
+  endTime: Yup.date().required("End time is required"),
 });
 
 const AdminCreateQuiz = () => {
-  const [image, setImage] = useState(null);
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
-  const minDate = new Date("November 2 2023 00:00");
 
   const quizData = {
     name: "",
     description: "",
-    duration:"",
-  };
-  const handleStartDateChange = (date) => {
-    // setQuizData({ ...quizData, startTime: date });
-    setStartTime(date);
-  };
-
-  const handleEndDateChange = (date) => {
-    // setQuizData({ ...quizData, endTime: date });
-    setEndTime(date);
+    duration: "",
+    image: "",
+    startTime: "",
+    endTime: "",
   };
 
-  const imagehandler = (e) => {
+  const handleDateChange = (date, setFieldValue, fieldName) => {
+    setFieldValue(fieldName, date)
+  };
+
+  const imagehandler = (e, setFieldValue, fieldName) => {
     const reader = new FileReader();
 
     reader.onload = () => {
       if (reader.readyState === 2) {
-        setImage(reader.result);
-        // setQuizData({ ...quizData, [e.target.name]: reader.result });
+        setFieldValue(fieldName, reader.result)
       }
     };
 
@@ -52,34 +50,17 @@ const AdminCreateQuiz = () => {
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    // e.preventDefault();
-    console.log(startTime, endTime);
-    if (!startTime) {
-      toast.error("Add Start Time!");
-      setSubmitting(false);
-      return;
-    }
-    if (!image) {
-      toast.error("Add Image!");
-      setSubmitting(false);
-      return;
-    }
-    if (!endTime) {
-      toast.error("Add Start Time!");
-      setSubmitting(false);
-      return;
-    }
-    console.log(1)
+    setLoading(true)
     try {
       const data = await axios.post(
         "https://treasure-hunt-tcb7.onrender.com/api/v1/quiz/create-quiz",
         {
           name: values.name,
           description: values.description,
-          image,
-          startTime,
-          endTime,
-          duration: +values.duration
+          image: values.image,
+          startTime: values.startTime,
+          endTime: values.endTime,
+          duration: +values.duration,
         },
         {
           withCredentials: true,
@@ -87,10 +68,12 @@ const AdminCreateQuiz = () => {
       );
       toast.success("Quiz created successfully!");
       setSubmitting(false);
+      setLoading(false)
       navigate("/admin-quiz");
     } catch (error) {
       setSubmitting(false);
-      console.log(error)
+      setLoading(false);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -114,8 +97,10 @@ const AdminCreateQuiz = () => {
             handleBlur,
             handleSubmit,
             isSubmitting,
+            setFieldValue
           }) => {
-            const { name, description,duration } = values;
+            const { name, description, duration, image, startTime, endTime } = values;
+            console.log(values)
             return (
               <Form>
                 <Input
@@ -141,7 +126,7 @@ const AdminCreateQuiz = () => {
                   error={touched.description && errors.description}
                 />
 
-                <div className="mb-4 w-full">
+                <div className="mb-4 w-full flex flex-col">
                   <label
                     className="block text-gray-700 font-bold mb-2 text-lg"
                     htmlFor="startTime"
@@ -150,17 +135,22 @@ const AdminCreateQuiz = () => {
                   </label>
                   <DatePicker
                     selected={startTime}
-                    onChange={handleStartDateChange}
+                    onChange={(e)=>handleDateChange(e,setFieldValue, 'startTime')}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15}
                     placeholderText="MM/DD/YYYY  HH:MM  AA"
                     dateFormat="MMMM d, yyyy h:mm aa"
                     className="p-2 mr-6 border rounded-xl w-full"
-                    minDate={Date.now() }
+                    minDate={Date.now()}
                   />
+                  {touched.startTime && (
+                    <p className="text-[crimson] text-sm mr-2 mb-2 self-end">
+                      {errors.startTime}
+                    </p>
+                  )}
                 </div>
-                <div className="mb-4 w-full">
+                <div className="mb-4 w-full flex flex-col">
                   <label
                     className="block text-gray-700 font-bold mb-2 text-lg"
                     htmlFor="endTime"
@@ -169,7 +159,7 @@ const AdminCreateQuiz = () => {
                   </label>
                   <DatePicker
                     selected={endTime}
-                    onChange={handleEndDateChange}
+                    onChange={(e)=>handleDateChange(e, setFieldValue, 'endTime')}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15}
@@ -178,28 +168,33 @@ const AdminCreateQuiz = () => {
                     className="p-2 mr-6 border rounded-xl w-full"
                     minDate={startTime}
                   />
+                  {touched.endTime && (
+                    <p className="text-[crimson] text-sm mr-2 mb-2 self-end">
+                      {errors.endTime}
+                    </p>
+                  )}
                 </div>
-                <div className="mb-4">
-                <Input
-                  type="number"
-                  label="Duration"
-                  placeholder="Quiz Duration in Minutes"
-                  className="p-2 border rounded-xl w-full"
-                  id="duration"
-                  value={duration}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.duration && errors.duration}
-                />
+                <div className="mb-4 flex flex-col">
+                  <Input
+                    type="number"
+                    label="Duration"
+                    placeholder="Quiz Duration in Minutes"
+                    className="p-2 border rounded-xl w-full"
+                    id="duration"
+                    value={duration}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={touched.duration && errors.duration}
+                  />
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 flex flex-col">
                   <h1 className="block text-gray-700 font-bold mb-2 text-lg">
                     Image Upload
                   </h1>
                   <div className="mt-5 ">
                     <label
                       htmlFor="image"
-                      className="bg-indigo-600 text-white font-bold  px-4 py-3 rounded-full focus:outline hover:text-indigo-600 hover:bg-white w-[30%] h-auto items-center"
+                      className="cursor-pointer bg-indigo-600 text-white font-bold  px-4 py-3 rounded-full focus:outline hover:text-indigo-600 hover:bg-white w-[30%] h-auto items-center"
                     >
                       Choose File
                     </label>
@@ -209,11 +204,16 @@ const AdminCreateQuiz = () => {
                       name="image"
                       accept="image/*"
                       className=" md:w-[10%] "
-                      onChange={imagehandler}
+                      onChange={(e)=>imagehandler(e, setFieldValue,'image')}
                       hidden
                     />
                     <img className="mx-2 mt-6 w-[250px]" src={image} />
                   </div>
+                  {touched.image && (
+                  <p className="text-[crimson] text-sm mr-2 mb-2 self-end">
+                    {errors.image}
+                  </p>
+                )}
                 </div>
                 <button
                   type="submit"
@@ -228,6 +228,9 @@ const AdminCreateQuiz = () => {
         </Formik>
         {/* </form> */}
       </div>
+      {
+          loading ? <Loading /> : null
+      }
     </div>
   );
 };

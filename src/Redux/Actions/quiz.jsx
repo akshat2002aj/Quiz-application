@@ -102,6 +102,37 @@ export const startQuiz = (id) => async (dispatch) => {
   }
 };
 
+// get all quiz
+export const submitQuiz = (id, d) => async (dispatch) => {
+  console.log(d, id)
+  try {
+    dispatch({
+      type: "submitQuizRequest",
+    });
+
+    const { data } = await axios.post(`${SERVER}/register/submit-quiz/${id}`,{
+      time: new Date(),
+      questions: d
+    },{
+      withCredentials: true,
+    });
+    toast.success("Quiz Submited");
+    dispatch({
+      type: "submitQuizSuccess",
+      payload: data.register
+    });
+  } catch (error) {
+    console.log(error)
+    console.log(123456)
+    toast.success(error?.response?.data?.message)
+    dispatch({
+      type: "submitQuizFailed",
+      payload: error?.response?.data?.message,
+    });
+  }
+};
+
+
 // all user
 export const getQuestionAdmin = (id) => async (dispatch) => {
   console.log(id);

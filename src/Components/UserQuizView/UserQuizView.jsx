@@ -29,7 +29,8 @@ const UserQuizView = ({ quiz, handle, setQuizHandle }) => {
 
     return formattedDate;
   }
-
+  const currentTimestamp = +new Date();
+  const EndTimestamp = +new Date(quiz.endTime);
   const handleChange = (event) => {
     setChecked((current) => !current);
   };
@@ -163,28 +164,64 @@ const UserQuizView = ({ quiz, handle, setQuizHandle }) => {
             </>
           ) : (
             <>
-              {quiz.registered ? (
-                <div className="flex flex-col justify-evenly mx-10  md:flex-row">
-                  {timeLeft === "0d 0h:0m:0s" ? (
-                    <button
-                      className="mt-2 mb-2 text-sm shadow-2xl bg-green-600 hover:bg-white py-2 px-2 hover:text-green-600 text-white cursor-pointer
-                  hover:border-2 hover:border-green-600 font-bold rounded-xl md:text-base focus:outline md:py-2 md:px-4 md:rounded-xl md:shadow-2xl md:mt-5  md:mb-3"
-                      onClick={handle.enter}
-                    >
-                      Start Now
-                    </button>
-                  ) : (
-                    <button
-                      className="mt-2 mb-2 text-sm shadow-2xl bg-yellow-400 py-2 px-2  text-white cursor-not-allowed
-                 font-bold rounded-xl md:text-base focus:outline md:py-2 md:px-4 md:rounded-xl md:shadow-2xl md:mt-5  md:mb-3 "
-                      disabled
-                    >
-                      Starts in! <span className="block text-red-400"></span>
-                      {timeLeft}
-                    </button>
-                  )}
+              {quiz.registered ? 
+               quiz.testGiven ? (
+                <div className="flex flex-col justify-center md:flex-row">
+                 <button
+                     className="mt-2 mb-2 text-sm shadow-2xl bg-white py-2 px-2  text-green-500 border-2 border-green-500 cursor-not-allowed
+                font-bold rounded-xl md:text-base focus:outline md:py-2 md:px-4 md:rounded-xl md:shadow-2xl md:mt-5  md:mb-3 "
+                     disabled
+                   >
+                    &#9989; Test Already Given
+                   </button>
                 </div>
-              ) : (
+              ): currentTimestamp>EndTimestamp? (
+                <div className="flex flex-col justify-center md:flex-row">
+                 <button
+                     className="mt-2 mb-2 text-sm shadow-2xl bg-white py-2 px-2  text-red-500 border-2 border-red-500 cursor-not-allowed
+                font-bold rounded-xl md:text-base focus:outline md:py-2 md:px-4 md:rounded-xl md:shadow-2xl md:mt-5  md:mb-3 "
+                     disabled
+                   >
+                    &#10060;
+                     Expired
+                   </button>
+                </div>
+              ):   (
+                 <div className="flex flex-col justify-evenly mx-10  md:flex-row">
+                 {timeLeft === "0d 0h:0m:0s" ? (
+                   <button
+                     className="mt-2 mb-2 text-sm shadow-2xl bg-green-600 hover:bg-white py-2 px-2 hover:text-green-600 text-white cursor-pointer
+                 hover:border-2 hover:border-green-600 font-bold rounded-xl md:text-base focus:outline md:py-2 md:px-4 md:rounded-xl md:shadow-2xl md:mt-5  md:mb-3"
+                     onClick={handle.enter}
+                   >
+                     Start Now
+                   </button>
+                 ) : (
+                   <button
+                     className="mt-2 mb-2 text-sm shadow-2xl bg-yellow-400 py-2 px-2  text-white cursor-not-allowed
+                font-bold rounded-xl md:text-base focus:outline md:py-2 md:px-4 md:rounded-xl md:shadow-2xl md:mt-5  md:mb-3 "
+                     disabled
+                   >
+                     Starts in! <span className="block text-red-400"></span>
+                     {timeLeft}
+                   </button>
+                 )}
+               </div>
+             
+              )
+                : currentTimestamp>EndTimestamp? (
+                  <div className="flex flex-col justify-center md:flex-row">
+                   <button
+                       className="mt-2 mb-2 text-sm shadow-2xl bg-white py-2 px-2  text-red-500 border-2 border-red-500 cursor-not-allowed
+                  font-bold rounded-xl md:text-base focus:outline md:py-2 md:px-4 md:rounded-xl md:shadow-2xl md:mt-5  md:mb-3 "
+                       disabled
+                     >
+                      &#10060;
+                       Expired
+                     </button>
+                  </div>
+                ) 
+                :(
                 <div className="flex flex-col justify-evenly mx-10  md:flex-row">
                   <button
                     className="mt-2 mb-2 text-sm shadow-2xl bg-green-600 hover:bg-white py-2 px-2 hover:text-green-600 text-white cursor-pointer
