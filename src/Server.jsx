@@ -1,0 +1,1 @@
+export const  SERVER = 'https://treasure-hunt-tcb7.onrender.com/api/v1'

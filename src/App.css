@@ -6,6 +6,16 @@
   height: 40vmin;
   pointer-events: none;
 }
+.fullscreen-enabled{
+  background-color: #ffffff;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.react-datepicker-wrapper{
+  width: 100%;
+  text-align: center;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
