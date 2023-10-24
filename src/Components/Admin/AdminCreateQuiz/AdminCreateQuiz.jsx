@@ -69,6 +69,7 @@ const AdminCreateQuiz = () => {
       setSubmitting(false);
       return;
     }
+    console.log(1)
     try {
       const data = await axios.post(
         "https://treasure-hunt-tcb7.onrender.com/api/v1/quiz/create-quiz",
@@ -78,6 +79,7 @@ const AdminCreateQuiz = () => {
           image,
           startTime,
           endTime,
+          duration: +values.duration
         },
         {
           withCredentials: true,
@@ -85,8 +87,11 @@ const AdminCreateQuiz = () => {
       );
       toast.success("Quiz created successfully!");
       setSubmitting(false);
-      navigate("/admin-dashboard");
-    } catch (error) {}
+      navigate("/admin-quiz");
+    } catch (error) {
+      setSubmitting(false);
+      console.log(error)
+    }
   };
 
   return (

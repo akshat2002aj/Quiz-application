@@ -46,7 +46,7 @@ export const getOneQuiz = (id) => async (dispatch) => {
   }
 };
 
-// get all quiz
+// get all quize
 export const registerQuiz = (id) => async (dispatch) => {
   try {
     dispatch({
@@ -80,7 +80,9 @@ export const startQuiz = (id) => async (dispatch) => {
       type: "startQuizRequest",
     });
 
-    const { data } = await axios.get(`${SERVER}/register/start-quiz/${id}`, {
+    const { data } = await axios.post(`${SERVER}/register/start-quiz/${id}`,{
+      time: new Date()
+    },{
       withCredentials: true,
     });
     toast.success("Quiz Started");
@@ -92,6 +94,7 @@ export const startQuiz = (id) => async (dispatch) => {
       },
     });
   } catch (error) {
+    toast.success(error?.response?.data?.message)
     dispatch({
       type: "startQuizFailed",
       payload: error.response.data.message,

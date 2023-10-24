@@ -27,9 +27,10 @@ const UserQuizViewPage = () => {
 
   useEffect(() => {
     console.log(start)
+    console.log(quiz)
     if(start && start.startTime){
       const countdownInterval = setInterval(() => {
-        setTimeLeft(Timer(start.startTime, 130));
+        setTimeLeft(Timer(start.startTime, quiz.duration));
       }, 1000);
   
       return () => {
