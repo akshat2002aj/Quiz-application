@@ -26,7 +26,14 @@ const AdminUserView = ({ users }) => {
     {
       id: "email",
       label: "Email-id",
-      minWidth: 170,
+      minWidth: 100,
+    },
+    {
+      id: "role",
+      label: "Role",
+      minWidth: 100,
+      align: "center",
+
     },
     {
       id: "actions",

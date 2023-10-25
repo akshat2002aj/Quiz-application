@@ -24,6 +24,16 @@ const UserQuizViewPage = () => {
   useEffect(() => {
     Store.dispatch(startQuiz(id));
   }, []);
+  
+  const handleKeyDown = (e) => {
+    e.preventDefault();
+  }
+  useEffect(() =>{
+    document.addEventListener('keydown',handleKeyDown);
+    return ()=>{
+      document.removeEventListener('keydown',handleKeyDown);
+    }
+  },[]);
 
   useEffect(() => {
     if (start && start.startTime) {
@@ -61,6 +71,7 @@ const UserQuizViewPage = () => {
               id={id}
               setTimeOver={setTimeOver}
               timeOver={timeOver}
+              handle = {handle}
             />
           ) : null}
         </div>

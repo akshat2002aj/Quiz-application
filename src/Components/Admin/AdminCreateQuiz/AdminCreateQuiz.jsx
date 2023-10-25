@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import { AiOutlineCloudUpload } from "react-icons/ai";
 import { useNavigate, Link } from "react-router-dom";
 import "../../../App.css";
 import { Formik, Form } from "formik";
@@ -21,7 +20,7 @@ const validationSchema = Yup.object({
 });
 
 const AdminCreateQuiz = () => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const quizData = {
@@ -34,7 +33,7 @@ const AdminCreateQuiz = () => {
   };
 
   const handleDateChange = (date, setFieldValue, fieldName) => {
-    setFieldValue(fieldName, date)
+    setFieldValue(fieldName, date);
   };
 
   const imagehandler = (e, setFieldValue, fieldName) => {
@@ -42,7 +41,7 @@ const AdminCreateQuiz = () => {
 
     reader.onload = () => {
       if (reader.readyState === 2) {
-        setFieldValue(fieldName, reader.result)
+        setFieldValue(fieldName, reader.result);
       }
     };
 
@@ -50,7 +49,7 @@ const AdminCreateQuiz = () => {
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    setLoading(true)
+    setLoading(true);
     try {
       const data = await axios.post(
         "https://treasure-hunt-tcb7.onrender.com/api/v1/quiz/create-quiz",
@@ -68,7 +67,7 @@ const AdminCreateQuiz = () => {
       );
       toast.success("Quiz created successfully!");
       setSubmitting(false);
-      setLoading(false)
+      setLoading(false);
       navigate("/admin-quiz");
     } catch (error) {
       setSubmitting(false);
@@ -78,7 +77,7 @@ const AdminCreateQuiz = () => {
   };
 
   return (
-    <div className="bg-white-100 flex items-center justify-center">
+    <div className="bg-white-100 flex items-center justify-center relative">
       <div className="bg-gray-300 rounded-3xl p-6 md:p-12 shadow-2xl  w-full md:w-[40rem] m-6">
         <h2 className="text-3xl font-bold mb-4 text-center">Create a Quiz</h2>
         {/* <form onSubmit={handleSubmit} className="space-y-4"> */}
@@ -97,10 +96,11 @@ const AdminCreateQuiz = () => {
             handleBlur,
             handleSubmit,
             isSubmitting,
-            setFieldValue
+            setFieldValue,
           }) => {
-            const { name, description, duration, image, startTime, endTime } = values;
-            console.log(values)
+            const { name, description, duration, image, startTime, endTime } =
+              values;
+            console.log(values);
             return (
               <Form>
                 <Input
@@ -135,7 +135,9 @@ const AdminCreateQuiz = () => {
                   </label>
                   <DatePicker
                     selected={startTime}
-                    onChange={(e)=>handleDateChange(e,setFieldValue, 'startTime')}
+                    onChange={(e) =>
+                      handleDateChange(e, setFieldValue, "startTime")
+                    }
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15}
@@ -159,7 +161,9 @@ const AdminCreateQuiz = () => {
                   </label>
                   <DatePicker
                     selected={endTime}
-                    onChange={(e)=>handleDateChange(e, setFieldValue, 'endTime')}
+                    onChange={(e) =>
+                      handleDateChange(e, setFieldValue, "endTime")
+                    }
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15}
@@ -204,16 +208,16 @@ const AdminCreateQuiz = () => {
                       name="image"
                       accept="image/*"
                       className=" md:w-[10%] "
-                      onChange={(e)=>imagehandler(e, setFieldValue,'image')}
+                      onChange={(e) => imagehandler(e, setFieldValue, "image")}
                       hidden
                     />
                     <img className="mx-2 mt-6 w-[250px]" src={image} />
                   </div>
                   {touched.image && (
-                  <p className="text-[crimson] text-sm mr-2 mb-2 self-end">
-                    {errors.image}
-                  </p>
-                )}
+                    <p className="text-[crimson] text-sm mr-2 mb-2 self-end">
+                      {errors.image}
+                    </p>
+                  )}
                 </div>
                 <button
                   type="submit"
@@ -228,9 +232,7 @@ const AdminCreateQuiz = () => {
         </Formik>
         {/* </form> */}
       </div>
-      {
-          loading ? <Loading /> : null
-      }
+      {loading ? <Loading /> : null}
     </div>
   );
 };

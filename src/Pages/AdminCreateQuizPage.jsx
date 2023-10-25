@@ -7,12 +7,12 @@ import AdminQuestionView from "../Components/Admin/AdminQuestionView/AdminQuesti
 import Store from "../Redux/Store";
 import { useSelector } from "react-redux";
 import { getQuestionAdmin } from "../Redux/Actions/quiz";
-import AdminCreateQuiz from "../Components/Admin/AdminCreateQuiz/AdminCreateQuiz"
+import AdminCreateQuiz from "../Components/Admin/AdminCreateQuiz/AdminCreateQuiz";
 
 const AdminCreateQuizPage = () => {
-    // const { isLoading} = useSelector((state) => state.quiz);
+  // const { isLoading} = useSelector((state) => state.quiz);
   return (
-<div>
+    <div>
       <Header />
       <div className="w-full flex">
         <div className="flex items-start justify-between w-full mt-[4rem]">
@@ -24,13 +24,12 @@ const AdminCreateQuizPage = () => {
             {/* {isLoading ? (
               <Loader />
             ) : ( */}
-              <AdminCreateQuiz  />
-        
+            <AdminCreateQuiz />
           </div>
         </div>
       </div>
-    </div>  
-    );
-}
+    </div>
+  );
+};
 
-export default AdminCreateQuizPage
+export default AdminCreateQuizPage;

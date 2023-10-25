@@ -3,37 +3,23 @@ import { useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { MdDashboard } from "react-icons/md";
-import axios from "axios";
-// import { toast } from "react-toastify";
-import { toast } from "react-hot-toast";
+import Store from "../../../Redux/Store";
 import Loading from "../Loading/Loading";
+import { logoutUser } from "../../../Redux/Actions/auth";
 const Header = ({ logout = false, timeLeft }) => {
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
-  const [loading, setLoading] = useState(false);
+  const { user, loading } = useSelector((state) => state.auth);
 
-  const handleLogout = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-    try {
-      const data = await axios.get(
-        "https://treasure-hunt-tcb7.onrender.com/api/v1/user/logout",
-        { withCredentials: true }
-      );
-      setLoading(false)
-      toast.success("Logout Successfully!");
-      navigate("/login");
-    } catch (error) {
-      setLoading(false)
-      toast.error(error?.response?.data?.message);
-    }
+  const handleLogout = (e) => {
+    // setLoading(true);
+    Store.dispatch(logoutUser());
   };
 
   return (
     <header className="bg-gradient-to-r fixed top-0 w-full z-10 from-blue-700 via-pink-400 to-fuchsia-800 p-1 md:p-2 flex justify-between items-center overflow-hidden">
       <div className="flex items-center">
         <img
-          src="https://res.cloudinary.com/dafmkubn3/image/upload/v1697536204/NITM_uc0war.gif"
+          src="https://res.cloudinary.com/dafmkubn3/image/upload/v1698227814/lmsfubo5pyedlqyh8ri1.png"
           alt="Logo"
           className="md:w-12 md:h-12 w-9 h-9 md:mr-6 md:ml-4 mr-2  
         "
@@ -62,7 +48,7 @@ const Header = ({ logout = false, timeLeft }) => {
         {logout ? (
           <div
             className="text-black rounded-full invisible bg-gray-300 md:w-12 md:h-12 w-9 h-9 mr-2 flex items-center justify-center md:text-xl{}"
-            onClick={handleLogout}
+            onClick={()=>handleLogout()}
           >
             <span className=" cursor-pointer ">
               {/* {user.name.slice(0, 1).toUpperCase()} */}

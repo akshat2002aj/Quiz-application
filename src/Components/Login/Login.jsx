@@ -24,7 +24,7 @@ export default function Login() {
         },
         { withCredentials: true }
       );
-      navigate("/");
+      navigate('/')
       toast.success("Login Success!");
       setLoading(false)
     } catch (error) {

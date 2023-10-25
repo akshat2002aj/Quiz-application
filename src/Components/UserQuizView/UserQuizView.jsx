@@ -17,6 +17,7 @@ const UserQuizView = ({ quiz, handle, setQuizHandle }) => {
   const navigate = useNavigate();
   const [isChecked, setChecked] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
+  const [open, setOpen] = React.useState(false);
 
   function formatDate(date) {
     const formattedDate = new Intl.DateTimeFormat("en-GB", {
@@ -49,6 +50,17 @@ const UserQuizView = ({ quiz, handle, setQuizHandle }) => {
       clearInterval(countdownInterval);
     };
   }, [quiz.startTime]);
+
+  const handleKeyDown = (e) => {
+    e.preventDefault();
+  }
+  useEffect(() =>{
+    document.addEventListener('keydown',handleKeyDown);
+    return ()=>{
+      document.removeEventListener('keydown',handleKeyDown);
+    }
+  },[]);
+
   return (
     <div className="w-full flex flex-col items-center ml-8">
       <div className="bg-white flex justify-center items-center w-full md:w-[40rem] ">

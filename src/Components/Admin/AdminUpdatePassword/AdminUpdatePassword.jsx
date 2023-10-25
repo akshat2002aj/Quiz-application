@@ -14,22 +14,28 @@ export default function AdminUpdatePassword() {
   const handleLogin = async (e) => {
     setLoading(true);
     e.preventDefault();
-    try {
-      const data = await axios.post(
-        "https://treasure-hunt-tcb7.onrender.com/api/v1/user/change-password",
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
-      toast.success("Password updated successfully")
-      navigate(`/admin-user`)
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      toast.error(error?.response?.data?.message);
+    if(password!==confirmPassword) {
+      toast.error("Passwords do not match");
+      setLoading(false);
+    }else{
+      try {
+        const data = await axios.post(
+          "https://treasure-hunt-tcb7.onrender.com/api/v1/user/change-password",
+          {
+            email,
+            password,
+          },
+          { withCredentials: true }
+        );
+        toast.success("Password updated successfully")
+        navigate(`/admin-user`)
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+        toast.error(error?.response?.data?.message);
+      }
     }
+    
   };
   return (
     <div className="flex items-center justify-center mt-[2rem]">

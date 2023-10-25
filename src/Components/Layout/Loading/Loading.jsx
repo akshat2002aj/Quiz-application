@@ -13,8 +13,8 @@ const Loading = () => {
     },
   };
   return (
-    <div className="w-full h-screen flex items-center justify-center absolute z-10 bg-transparent">
-      <Lottie options={defaultOptions} width={500} height={500} />
+    <div className="w-full fixed z-10 bg-transparent top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%]">
+      <Lottie options={defaultOptions} width={300} height={300} />
     </div>
   );
 };

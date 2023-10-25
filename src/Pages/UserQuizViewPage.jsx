@@ -27,6 +27,18 @@ const UserQuizViewPage = () => {
   useEffect(() => {
     Store.dispatch(getOneQuiz(id));
   }, []);
+
+  const handleKeyDown = (e) => {
+    e.preventDefault();
+  }
+  useEffect(() =>{
+    document.addEventListener('keydown',handleKeyDown);
+    return ()=>{
+      document.removeEventListener('keydown',handleKeyDown);
+    }
+  },[]);
+
+  
   return (
     <div className="w-full overflow-hidden">
       <FullScreen handle={handle}>

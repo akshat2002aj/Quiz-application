@@ -4,32 +4,41 @@ import { submitQuiz } from "../../Redux/Actions/quiz";
 import { useSelector } from "react-redux";
 import ThankYouPage from "../../Pages/ThankYouPage";
 import Loading from "../Layout/Loading/Loading";
+import BasicModal from "../Layout/Modal/Modal";
 // import { Radio } from "@material-tailwind/react";
-const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver }) => {
+const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
   const { submitted, result } = useSelector((state) => state.quiz);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [thank, setThank] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState(-1);
   const [questionStatus, setQuestionStatus] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
   };
 
-  useEffect(()=>{
-    if(submitted){
-      setTimeOver(true)
+  useEffect(() => {
+    if (submitted || result) {
+      setTimeOver(true);
       setLoading(false);
       setThank(true);
     }
-  },[submitted, result])
+  }, [submitted, result]);
 
   useEffect(() => {
     if (timeOver) {
+      console.log(12345)
       handleSubmit();
     }
   }, [timeOver]);
+
+  useEffect(()=>{
+    if(!handle.active){
+      setOpen(true);
+    }
+  },[handle.active])
 
   const handleNextQuestion = () => {
     if (currentQuestion + 1 < questions.length) {
@@ -81,13 +90,14 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver }) => {
   };
 
   const handleSubmit = async () => {
-    setLoading(true)
+    setLoading(true);
     const updatedStatus = [...questionStatus];
     updatedStatus[currentQuestion] = {
       question: questions[currentQuestion]._id,
       correctOption: selectedOption === -1 ? -1 : selectedOption + 1,
     };
     Store.dispatch(submitQuiz(id, updatedStatus));
+    
   };
 
   const [visibleQuestions, setVisibleQuestions] = useState(20);
@@ -95,11 +105,15 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver }) => {
   const handleUpdate = () => {
     if ((currentQuestion + 1) % 20 == 0)
       setValue((isValue) => isValue + visibleQuestions);
+    
+    
   };
 
   return (
     <>
-      {thank ? <ThankYouPage id={id}/> : (
+      {thank ? (
+        <ThankYouPage id={id} />
+      ) : (
         <div className="flex justify-center align-center flex-col w-[90%] mb-10   mt-10">
           <div className="flex flex-row">
             <div className="self-center bg-slate-50  border border-gray-100 shadow-lg mx-5 p-4 rounded-xl sm:mt-204 sm:px-14 md:w-full ">
@@ -181,9 +195,11 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver }) => {
                         className={`text-black rounded-full md:w-12 md:h-12 w-9 h-9 mr-2 mt-5 flex items-center justify-center md:text-xl ${
                           index + isValue === currentQuestion
                             ? "bg-yellow-400" // Current question is yellow
-                            : questionStatus[index + isValue] >= 0
+                            : questionStatus[index + isValue]?.correctOption >=
+                              0
                             ? "bg-green-400" // Answered questions are green
-                            : questionStatus[index + isValue] === -1
+                            : questionStatus[index + isValue]?.correctOption ===
+                              -1
                             ? "bg-red-400" // Unanswered questions are red
                             : "bg-gray-300"
                         }`}
@@ -195,11 +211,10 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver }) => {
               </div>
             </div>
           </div>
-          {
-            loading ? <Loading /> : (null)
-          }
+          <BasicModal open={open} setOpen={setOpen} handle={handle} handleSubmit={handleSubmit}/>
         </div>
       )}
+      {loading ? <Loading /> : null}
     </>
   );
 };
