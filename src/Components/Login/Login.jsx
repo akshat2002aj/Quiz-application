@@ -33,7 +33,7 @@ export default function Login() {
     }
   };
   return (
-    <div className="flex items-center justify-center h-screen bg-white relative">
+    <div className="flex items-center justify-center h-screen  relative">
       <div className="bg-gray-300 rounded-3xl px-4 md:p-12 shadow-2xl w-[40rem] h-[25rem] m-5 py-8">
         <h2 className="text-3xl font-semibold text-gray-700 mb-5 text-center mt-2 md:mt-0">
           Login

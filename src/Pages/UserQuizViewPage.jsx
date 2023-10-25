@@ -28,15 +28,7 @@ const UserQuizViewPage = () => {
     Store.dispatch(getOneQuiz(id));
   }, []);
 
-  const handleKeyDown = (e) => {
-    e.preventDefault();
-  }
-  useEffect(() =>{
-    document.addEventListener('keydown',handleKeyDown);
-    return ()=>{
-      document.removeEventListener('keydown',handleKeyDown);
-    }
-  },[]);
+
 
   
   return (

@@ -51,15 +51,8 @@ const UserQuizView = ({ quiz, handle, setQuizHandle }) => {
     };
   }, [quiz.startTime]);
 
-  const handleKeyDown = (e) => {
-    e.preventDefault();
-  }
-  useEffect(() =>{
-    document.addEventListener('keydown',handleKeyDown);
-    return ()=>{
-      document.removeEventListener('keydown',handleKeyDown);
-    }
-  },[]);
+
+
 
   return (
     <div className="w-full flex flex-col items-center ml-8">

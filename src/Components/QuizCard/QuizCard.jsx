@@ -21,7 +21,7 @@ const QuizCard = (props) => {
   }, [props.data.startTime]);
   console.log(timeLeft);
   return (
-    <div className={`md:w-[20rem] w-[90%] relative bg-white rounded-3xl shadow-lg md:px-4 px-2 pt-[3rem] md:mx-6 mx-2 mb-4 mt-[5rem] border-2 ${
+    <div className={`md:w-[18rem] w-[90%] relative bg-white rounded-3xl shadow-lg md:px-4 px-2 pt-[3rem] md:mx-6 mx-2 mb-4 mt-[5rem] border-2 ${
       user.role === "user"  ? null 
       : props.data.published ? "border-green-400":
       null
@@ -30,10 +30,10 @@ const QuizCard = (props) => {
       <img
         src={props.data.image.url}
         alt="random img"
-        className="md:w-[16rem] w-[75%] h-[8rem] absolute rounded-2xl shadow-md top-[-4rem] left-[2rem]"
+        className="md:w-[14rem] w-[75%] h-[8rem] absolute rounded-2xl shadow-md top-[-4rem] left-[2rem]"
       />
 
-      <div className=" px-4 w-full pt-[3rem] ">
+      <div className=" px-4 w-full pt-[2rem] ">
         <div className="flex flex-col items-baseline">
           <h1 className=" text-lg font-semibold uppercase leading-tight truncate">
             {props.data.name}

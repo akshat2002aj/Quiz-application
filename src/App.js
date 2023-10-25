@@ -22,7 +22,6 @@ import AdminQuizPage from "./Pages/AdminQuizPage";
 import AdminUserPage from "./Pages/AdminUserPage";
 import UserQuizViewPage from "./Pages/UserQuizViewPage";
 import PageNotFound from "./Pages/404Page";
-import ThankYouPage from "./Pages/ThankYouPage";
 import AdminUpdatePasswordPage from "./Pages/AdminUpdatePasswordPage";
 import BasicModal from "./Components/Layout/Modal/Modal";
 function App() {
@@ -32,6 +31,31 @@ function App() {
     Store.dispatch(loadUser());
   }, []);
 
+  const handleBlockInspect=(e) => {
+    e.preventDefault();
+  }
+
+  // useEffect(() => {
+  //   window.addEventListener('contextmenu', handleBlockInspect);
+  //   return function cleanup(){
+  //     window.removeEventListener('contextmenu', handleBlockInspect);
+  //   }
+  // },[])
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      console.log(e.key);
+      if (e.key === 'Escape' || e.key === 'Win' || e.key === 'F12') {
+        console.log("are you sure?")
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
   return (
     <>
       {loading ? (

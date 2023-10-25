@@ -13,7 +13,7 @@ const Loading = () => {
     },
   };
   return (
-    <div className="w-full fixed z-10 bg-transparent top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%]">
+    <div className="w-full backdrop-blur-sm fixed z-10 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%]">
       <Lottie options={defaultOptions} width={300} height={300} />
     </div>
   );

@@ -20,6 +20,7 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
   };
 
   useEffect(() => {
+    console.log(submitted, result);
     if (submitted || result) {
       setTimeOver(true);
       setLoading(false);
@@ -29,16 +30,17 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
 
   useEffect(() => {
     if (timeOver) {
-      console.log(12345)
+      console.log(12345);
       handleSubmit();
     }
   }, [timeOver]);
 
-  useEffect(()=>{
-    if(!handle.active){
+  useEffect(() => {
+    if (!handle.active) {
+      // handle.enter();
       setOpen(true);
     }
-  },[handle.active])
+  }, [handle.active]);
 
   const handleNextQuestion = () => {
     if (currentQuestion + 1 < questions.length) {
@@ -97,7 +99,6 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
       correctOption: selectedOption === -1 ? -1 : selectedOption + 1,
     };
     Store.dispatch(submitQuiz(id, updatedStatus));
-    
   };
 
   const [visibleQuestions, setVisibleQuestions] = useState(20);
@@ -105,14 +106,20 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
   const handleUpdate = () => {
     if ((currentQuestion + 1) % 20 == 0)
       setValue((isValue) => isValue + visibleQuestions);
-    
-    
   };
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && handle.active) {
+      e.preventDefault();
+      handle.enter();
+      handle.active = !handle.active;
+    }
+  });
 
   return (
     <>
       {thank ? (
-        <ThankYouPage id={id} />
+        <ThankYouPage id={id} setLoading={setLoading} />
       ) : (
         <div className="flex justify-center align-center flex-col w-[90%] mb-10   mt-10">
           <div className="flex flex-row">
@@ -211,10 +218,16 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
               </div>
             </div>
           </div>
-          <BasicModal open={open} setOpen={setOpen} handle={handle} handleSubmit={handleSubmit}/>
+          <BasicModal
+            open={open}
+            setOpen={setOpen}
+            handle={handle}
+            handleSubmit={handleSubmit}
+          />
+
+          {loading ? <Loading /> : null}
         </div>
       )}
-      {loading ? <Loading /> : null}
     </>
   );
 };
