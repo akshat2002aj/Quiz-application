@@ -48,8 +48,8 @@ const ActivateUser = () => {
         ) : (
           <>
             <Lottie options={defaultOptions} width={300} height={300} />
-            <h1 className="text-4xl mb-4">Welcome to QuizNest!</h1>
-            <p className="text-lg mb-6 text-center">
+            <h1 className="text-4xl mb-4 px-4">Welcome to QuizNest!</h1>
+            <p className="text-lg mb-6 text-center px-4">
               {" "}
               Your registration is now complete, and you're all set to embark on
               a journey of knowledge and fun.
