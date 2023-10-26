@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 
 const style = {
   position: 'absolute',
@@ -34,17 +34,18 @@ export default function BasicModal({open, setOpen, handle, handleSubmit}) {
 
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
+      {/*<Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }} className="flex flex-col justify-center">
-          <h1 id="parent-modal-title" className='flex justify-center mt-2 text-bold text-lg'>Do you want to continue the test?</h1>
+        <Box sx={{ ...style, width: 400 }} className="flex flex-col justify-center rounded-3xl">
+          <h1 className='text-3xl text-bold flex justify-center mb-2 text-bold'>Alert!!</h1>
+          <h2 id="parent-modal-title" className='flex justify-center mt-2 text-black text-xl'>Do you want to continue the test?</h2>
           <div className="flex flex-row justify-center mt-3">
-            <Button className="text-indigo-600 text-bold" onClick={handleOpen}>Yes</Button>
-            <Button className="text-indigo-600 text-semibold" onClick={handleClose}>No</Button>
+            <button className="text-indigo-600 text-3xl" onClick={handleOpen}>Yes</button>
+            <button className="text-indigo-600 text-semibold text-3xl" onClick={handleClose}>No</button>
           </div>
       
         </Box>

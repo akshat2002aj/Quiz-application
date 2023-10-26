@@ -5,32 +5,26 @@ import { toast } from "react-hot-toast";
 import { SERVER } from "../../Server";
 import Loading from "../Layout/Loading/Loading";
 import {Link} from "react-router-dom"
+import Store from '../../Redux/Store'
+import { loginUser } from "../../Redux/Actions/auth";
+import { useSelector } from "react-redux";
 
 export default function Login() {
+  const { loading } = useSelector((state)=>state.auth)
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const handleLogin = async (e) => {
-    setLoading(true);
+    // setLoading(true);
     e.preventDefault();
-
-    try {
-      const data = await axios.post(
-        `${SERVER}/user/login-user`,
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
-      navigate('/')
-      toast.success("Login Success!");
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      toast.error(error?.response?.data?.message);
+    if(!email || !password){
+      return toast.error("Please add data!")
     }
+    Store.dispatch(loginUser({
+      email, 
+      password
+    }))
   };
   return (
     <div className="flex items-center justify-center h-screen  relative">

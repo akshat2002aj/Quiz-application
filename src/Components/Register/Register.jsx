@@ -22,9 +22,11 @@ export default function Register() {
         withCredentials: true
       })
       console.log(data);
-      navigate('/admin-users')
+      toast.success("Register successfully")
+      navigate('/')
     } catch (error) {
       console.log(error)
+      toast.error(error?.response?.data?.message)
     }
   }
   return (
