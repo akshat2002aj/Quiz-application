@@ -12,10 +12,8 @@ const ActivateUser = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [error, setError] = useState(false);
-  const isInitialMount = useRef(true);
 
   useEffect(() => {
-    if (!isInitialMount.current) {
       if (id) {
         const activationEmail = async () => {
           try {
@@ -30,9 +28,6 @@ const ActivateUser = () => {
         };
         activationEmail();
       }
-    } else {
-      isInitialMount.current = false;
-    }
   }, [id]);
 
   const defaultOptions = {
