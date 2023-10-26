@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -10,11 +10,16 @@ import { loginUser } from "../../Redux/Actions/auth";
 import { useSelector } from "react-redux";
 
 export default function Login() {
-  const { loading } = useSelector((state)=>state.auth)
+  const { loader, isAuthenticated } = useSelector((state)=>state.auth)
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [loading, setLoading] = useState(false);
+  useEffect(()=>{
+    if(isAuthenticated){
+      navigate('/')
+    }
+  },[isAuthenticated])
   const handleLogin = async (e) => {
     // setLoading(true);
     e.preventDefault();
@@ -82,7 +87,7 @@ export default function Login() {
         </form>
       </div>
       {
-        loading ? (<Loading />) :(null)
+        loader ? (<Loading />) :(null)
       }
     </div>
   );
