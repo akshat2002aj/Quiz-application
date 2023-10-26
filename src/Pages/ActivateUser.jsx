@@ -1,32 +1,37 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Lottie from "react-lottie";
 import animationData from "../Assets/registration.json";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { SERVER } from '../Server';
-import toast from 'react-hot-toast';
-import axios from "axios"
+import { SERVER } from "../Server";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const ActivateUser = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [error, setError] = useState(false);
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
-    if (id) {
-      const activationEmail = async () => {
-        try {
-          const res = await axios.post(`${SERVER}/user/activation`, {
-            activation_token:id,
-          });
-          toast.success(res.data.message)
-        } catch (error) {
-          toast.error(error.response.data.message)
-          setError(true);
-        }
-      };
-      activationEmail();
+    if (!isInitialMount.current) {
+      if (id) {
+        const activationEmail = async () => {
+          try {
+            const res = await axios.post(`${SERVER}/user/activation`, {
+              activation_token: id,
+            });
+            toast.success(res.data.message);
+          } catch (error) {
+            toast.error(error.response.data.message);
+            setError(true);
+          }
+        };
+        activationEmail();
+      }
+    } else {
+      isInitialMount.current = false;
     }
   }, [id]);
 
@@ -40,28 +45,31 @@ const ActivateUser = () => {
   };
   return (
     <div>
-        <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="flex flex-col items-center justify-center min-h-screen">
         {error ? (
-        <p>Your token is expired!</p>
-      ) : (
-        <>
-        <Lottie options={defaultOptions} width={300} height={300} />
-        <h1 className="text-4xl mb-4">Welcome to QuizNest!</h1>
-        <p className="text-lg mb-6 text-center"> Your registration is now complete, and you're all set to embark on a journey of knowledge and fun.</p>
-        <Link to='/'>
-            <button 
-            className="shadow-2xl bg-indigo-600 mt-4  hover:bg-white text-white hover:text-indigo-600 font-bold py-2 px-4 rounded-lg focus:outline hover:border-2 hover:border-indigo-600"
-            onClick={()=> navigate(`/`)}
-            >
-            Go to Home
-            </button>
-        </Link>
-        </>
-      )}
+          <p>Your token is expired!</p>
+        ) : (
+          <>
+            <Lottie options={defaultOptions} width={300} height={300} />
+            <h1 className="text-4xl mb-4">Welcome to QuizNest!</h1>
+            <p className="text-lg mb-6 text-center">
+              {" "}
+              Your registration is now complete, and you're all set to embark on
+              a journey of knowledge and fun.
+            </p>
+            <Link to="/">
+              <button
+                className="shadow-2xl bg-indigo-600 mt-4  hover:bg-white text-white hover:text-indigo-600 font-bold py-2 px-4 rounded-lg focus:outline hover:border-2 hover:border-indigo-600"
+                onClick={() => navigate(`/`)}
+              >
+                Go to Home
+              </button>
+            </Link>
+          </>
+        )}
       </div>
     </div>
-    
-  )
-}
+  );
+};
 
-export default ActivateUser
+export default ActivateUser;
