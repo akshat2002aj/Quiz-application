@@ -19,8 +19,10 @@ const ActivateUser = () => {
           try {
             const res = await axios.post(`${SERVER}/user/activation`, {
               activation_token: id,
+            },{
+                withCredentials: true,
             });
-            toast.success(res.data.message);
+            toast.success("Registered Successfully!");
           } catch (error) {
             toast.error(error.response.data.message);
             setError(true);
@@ -42,7 +44,7 @@ const ActivateUser = () => {
     <div>
       <div className="flex flex-col items-center justify-center min-h-screen">
         {error ? (
-          <p>Your token is expired!</p>
+          <p className="text-[crimson]">Your token is expired!</p>
         ) : (
           <>
             <Lottie options={defaultOptions} width={300} height={300} />
