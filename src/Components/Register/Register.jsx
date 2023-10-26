@@ -3,15 +3,18 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { SERVER } from "../../Server";
+import Loading from "../Layout/Loading/Loading"
 
 
 export default function Register() {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [loading, setLoading]= useState(false);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const data = await axios.post(`${SERVER}/user/create-user`, {
@@ -23,9 +26,11 @@ export default function Register() {
       })
       console.log(data);
       toast.success(data.data.message)
+      setLoading(false);
     } catch (error) {
       console.log(error)
       toast.error(error?.response?.data?.message)
+      setLoading(false);
     }
   }
   return (
@@ -96,6 +101,9 @@ export default function Register() {
           </div>
         </form>
       </div>
+      {
+        loading ? (<Loading />) : null
+      }
     </div>
   );
 }
