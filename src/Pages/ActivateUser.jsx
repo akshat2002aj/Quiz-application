@@ -54,12 +54,12 @@ const ActivateUser = () => {
               Your registration is now complete, and you're all set to embark on
               a journey of knowledge and fun.
             </p>
-            <Link to="/">
+            <Link to="/login">
               <button
                 className="shadow-2xl bg-indigo-600 mt-4  hover:bg-white text-white hover:text-indigo-600 font-bold py-2 px-4 rounded-lg focus:outline hover:border-2 hover:border-indigo-600"
                 onClick={() => navigate(`/`)}
               >
-                Go to Home
+                Go to Login
               </button>
             </Link>
           </>
