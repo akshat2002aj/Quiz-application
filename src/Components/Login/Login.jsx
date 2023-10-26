@@ -77,7 +77,7 @@ export default function Login() {
             {/* <Link to="/home"> */}
             <button
               type="submit"
-              disabled={loading}
+              disabled={loader}
               className="shadow-2xl bg-indigo-600 hover:bg-white hover:text-indigo-600 text-white font-bold py-2 px-6 rounded-xl focus:outline "
             >
               Sign In
