@@ -22,8 +22,7 @@ export default function Register() {
         withCredentials: true
       })
       console.log(data);
-      toast.success("Register successfully")
-      navigate('/')
+      toast.success(data.data.message)
     } catch (error) {
       console.log(error)
       toast.error(error?.response?.data?.message)

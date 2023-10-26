@@ -25,6 +25,7 @@ import PageNotFound from "./Pages/404Page";
 import AdminUpdatePasswordPage from "./Pages/AdminUpdatePasswordPage";
 import BasicModal from "./Components/Layout/Modal/Modal";
 import DashboardCard from "./Components/DashboradCard/DashBoardCard";
+import ActivateUser from "./Pages/ActivateUser";
 function App() {
   const { loading, user } = useSelector((state) => state.auth);
 
@@ -67,6 +68,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/dc" element={<DashboardCard />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/activation/:id" element={<ActivateUser/>}/>
             {/* User Routes */}
             <Route
               path="/"
