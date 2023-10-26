@@ -121,9 +121,9 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
       {thank ? (
         <ThankYouPage id={id} setLoading={setLoading} />
       ) : (
-        <div className="flex justify-center align-center flex-col w-[90%] mb-10   mt-10">
+        <div className="flex justify-center align-center flex-col w-full md:w-[90%] mb-10 mt-10">
           <div className="flex flex-row">
-            <div className="self-center bg-slate-50  border border-gray-100 shadow-lg mx-5 p-4 rounded-xl sm:mt-204 sm:px-14 md:w-full ">
+            <div className="self-center bg-slate-50  border border-gray-100 shadow-lg mx-5 p-4 rounded-xl sm:mt-204 sm:px-10 md:w-full ">
               <div className="flex flex-col  sm:flex-row sm:justify-between sm:items-center">
                 <h1 className=" font-bold mb-1 rounded-3xl text-2xl md:tex-3xl">
                   Question {currentQuestion + 1}
@@ -170,9 +170,9 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
                   )}
                 </label>
               ))}
-              <div className="flex justify-between">
+              <div className="flex justify-between md:gap-0 gap-3">
                 <button
-                  className="shadow-2xl bg-red-600 hover:bg-white hover:text-red-600 text-white font-bold py-3 px-7 rounded-xl hover:outline "
+                  className="shadow-2xl bg-red-600 hover:bg-white hover:text-red-600 text-white font-bold py-2 md:py-3 md:px-7 px-5 rounded-xl hover:outline "
                   onClick={handleon}
                 >
                   Clear
@@ -184,13 +184,13 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
                       ? handleSubmit
                       : handleNextQuestion
                   }
-                  className="shadow-2xl bg-indigo-600 hover:bg-white hover:text-indigo-600 text-white font-bold py-3 px-7 rounded-xl hover:outline "
+                  className="shadow-2xl bg-indigo-600 hover:bg-white hover:text-indigo-600 text-white font-bold py-2 md:py-3 md:px-7 px-5 rounded-xl hover:outline "
                 >
                   {questions.length == currentQuestion + 1 ? "Submit" : "Next"}
                 </button>
               </div>
             </div>
-            <div className="bg-slate-200 shadow-lg mr-2 ml-5 p-4 rounded-xl w-[30rem] h-[25rem]">
+            <div className="hidden md:block bg-slate-200 shadow-lg mr-2 ml-5 p-4 rounded-xl w-[30rem] h-[25rem]">
               <h1 className="text-2xl font-semibold self-center">Questions</h1>
               <div className="flex flex-wrap justify-center">
                 {questions

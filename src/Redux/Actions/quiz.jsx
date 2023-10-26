@@ -41,7 +41,7 @@ export const getOneQuiz = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getOneQuizFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data.message,
     });
   }
 };

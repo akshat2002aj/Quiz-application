@@ -24,6 +24,7 @@ import UserQuizViewPage from "./Pages/UserQuizViewPage";
 import PageNotFound from "./Pages/404Page";
 import AdminUpdatePasswordPage from "./Pages/AdminUpdatePasswordPage";
 import BasicModal from "./Components/Layout/Modal/Modal";
+import DashboardCard from "./Components/DashboradCard/DashBoardCard";
 function App() {
   const { loading, user } = useSelector((state) => state.auth);
 
@@ -64,7 +65,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/modal" element={<BasicModal />} />
+            <Route path="/dc" element={<DashboardCard />} />
             <Route path="/register" element={<RegisterPage />} />
             {/* User Routes */}
             <Route

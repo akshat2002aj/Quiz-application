@@ -41,11 +41,11 @@ export default function BasicModal({open, setOpen, handle, handleSubmit}) {
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: 400 }} className="flex flex-col justify-center rounded-3xl">
-          <h1 className='text-3xl text-bold flex justify-center mb-2 text-bold'>Alert!!</h1>
-          <h2 id="parent-modal-title" className='flex justify-center mt-2 text-black text-xl'>Do you want to continue the test?</h2>
-          <div className="flex flex-row justify-center mt-3">
-            <button className="text-indigo-600 text-3xl" onClick={handleOpen}>Yes</button>
-            <button className="text-indigo-600 text-semibold text-3xl" onClick={handleClose}>No</button>
+          <h1 className='text-[crimson] text-3xl font-bold flex justify-center mb-2 text-bold'>Alert!!</h1>
+          <h2 id="parent-modal-title" className='flex justify-center mt-2 text-black text-xl font-semibold'>Do you want to continue the test?</h2>
+          <div className="flex flex-row justify-evenly mt-3 gap-5">
+            <button className="text-white text-2xl bg-green-500 p-2 rounded-xl" onClick={handleOpen}>Yes</button>
+            <button className="text-white text-2xl bg-[crimson] p-2 rounded-xl" onClick={handleClose}>No</button>
           </div>
       
         </Box>
