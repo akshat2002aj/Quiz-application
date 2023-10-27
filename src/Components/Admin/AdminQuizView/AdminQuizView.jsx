@@ -33,12 +33,14 @@ const AdminQuizView = ({ quiz }) => {
   };
 
   function formatDate(date) {
-    const formattedDate = new Intl.DateTimeFormat("en-GB", {
+    const formattedDate = new Intl.DateTimeFormat("en-US", {
       year: "2-digit",
       month: "2-digit",
       day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
+      hour12: true,
+      timeZone: "Asia/Kolkata"
     }).format(new Date(date));
 
     return formattedDate;
