@@ -44,8 +44,8 @@ export default function BasicModal({open, setOpen, handle, handleSubmit}) {
           <h1 className='text-[crimson] text-3xl font-bold flex justify-center mb-2 text-bold'>Alert!!</h1>
           <h2 id="parent-modal-title" className='flex justify-center mt-2 text-black text-xl font-semibold'>Do you want to continue the test?</h2>
           <div className="flex flex-row justify-evenly mt-3 gap-5">
-            <button className="text-white text-2xl bg-green-500 p-2 rounded-xl" onClick={handleOpen}>Yes</button>
-            <button className="text-white text-2xl bg-[crimson] p-2 rounded-xl" onClick={handleClose}>No</button>
+            <button className="text-white text-xl bg-green-500 px-3 py-1 rounded-xl" onClick={handleOpen}>Yes</button>
+            <button className="text-white text-xl bg-[crimson] px-3 py-1 rounded-xl" onClick={handleClose}>No</button>
           </div>
       
         </Box>

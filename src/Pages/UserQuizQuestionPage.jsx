@@ -53,7 +53,7 @@ const UserQuizViewPage = () => {
         ) : (
           <Header logout={handle.active} timeLeft={timeLeft} />
         )}
-        <div className="mt-[4rem] ml-[2rem] md:ml-0 md:w-full flex flex-col self-center items-center w-[80%] ">
+        <div className="mt-[4rem]  w-full flex flex-col self-center items-center  ">
           {loader ? (
             <Loader />
           ) : start ? (

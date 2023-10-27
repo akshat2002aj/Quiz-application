@@ -122,8 +122,8 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
         <ThankYouPage id={id} setLoading={setLoading} />
       ) : (
         <div className="flex justify-center align-center flex-col w-full md:w-[90%] mb-10 mt-10">
-          <div className="flex flex-row">
-            <div className="self-center bg-slate-50  border border-gray-100 shadow-lg mx-5 p-4 rounded-xl sm:mt-204 sm:px-10 md:w-full ">
+          <div className="flex flex-row justify-center">
+            <div className="self-center bg-slate-100  border border-gray-100 shadow-lg p-4 rounded-xl sm:px-10 md:w-full w-[75%] ">
               <div className="flex flex-col  sm:flex-row sm:justify-between sm:items-center">
                 <h1 className=" font-bold mb-1 rounded-3xl text-2xl md:tex-3xl">
                   Question {currentQuestion + 1}

@@ -19,7 +19,7 @@ export const getAllQuiz = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getAllQuizFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data.message,
     });
   }
 };
@@ -97,7 +97,7 @@ export const startQuiz = (id) => async (dispatch) => {
     toast.success(error?.response?.data?.message)
     dispatch({
       type: "startQuizFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data.message,
     });
   }
 };
