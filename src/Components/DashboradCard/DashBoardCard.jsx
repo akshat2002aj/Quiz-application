@@ -10,11 +10,15 @@ const DashboardCard = (props) => {
   
 
   return (
-    <div className="md:w-[14rem] h-[8rem] w-[90%] bg-gray-300 rounded-xl shadow-2xl p-5 md:mr-6 md:ml-4 mx-2 mb-4 mt-[5rem] ">
-          <h1 className=" text-2xl font-bold">
+    <div className="md:w-[16rem]  w-[90%] bg-gray-300 rounded-xl shadow-2xl p-5 md:mr-6 md:ml-4 mx-2 mb-4 mt-[5rem] ">
+          <div className="flex justify-center">
+          <div className="bg-white w-14 h-14 rounded-full flex justify-center items-center mb-4 ">
+          <h1 className=" text-[1.9rem] font-bold">
           {props.data.numberValue}
           </h1>
-          <p className="text-xl font-semibold">
+          </div>
+          </div>
+          <p className="text-xl font-semibold mb-1 flex justify-center">
             {props.data.stringValue}
           </p>
       </div>

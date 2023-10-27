@@ -19,7 +19,6 @@ const QuizCard = (props) => {
       clearInterval(countdownInterval);
     };
   }, [props.data.startTime]);
-  console.log(timeLeft);
   return (
     <div className={`md:w-[18rem] w-[90%] relative bg-white rounded-3xl shadow-lg md:px-4 px-2 pt-[3rem] md:mx-6 mx-2 mb-4 mt-[5rem] border-2 ${
       user.role === "user"  ? null 
