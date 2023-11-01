@@ -37,12 +37,12 @@ function App() {
     e.preventDefault();
   }
 
-  // useEffect(() => {
-  //   window.addEventListener('contextmenu', handleBlockInspect);
-  //   return function cleanup(){
-  //     window.removeEventListener('contextmenu', handleBlockInspect);
-  //   }
-  // },[])
+  useEffect(() => {
+    window.addEventListener('contextmenu', handleBlockInspect);
+    return function cleanup(){
+      window.removeEventListener('contextmenu', handleBlockInspect);
+    }
+  },[])
   return (
     <>
       {loading ? (
