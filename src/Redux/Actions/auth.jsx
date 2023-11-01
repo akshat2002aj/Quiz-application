@@ -51,7 +51,7 @@ export const logoutUser = () => async (dispatch) => {
 // load user
 export const loginUser = (d) => async (dispatch) => {
   // const navigate = useNavigate();
-  // console.log(data)
+
   try {
     dispatch({
       type: "LoginUserRequest",

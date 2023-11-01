@@ -4,10 +4,15 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { SERVER } from "../../../Server";
 import Loading from "../../Layout/Loading/Loading";
+import Store from "../../../Redux/Store";
+import { deleteQuiz } from "../../../Redux/Actions/quiz";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const AdminQuizView = ({ quiz }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const {deleted, isLoading} = useSelector((state)=> state.quiz)
   const handlePublish = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -32,6 +37,12 @@ const AdminQuizView = ({ quiz }) => {
     }
   };
 
+  useEffect(()=>{
+    if(deleted){
+      navigate('/admin-quiz')
+    }
+  },[deleted])
+
   function formatDate(date) {
     const formattedDate = new Intl.DateTimeFormat("en-US", {
       year: "2-digit",
@@ -44,6 +55,11 @@ const AdminQuizView = ({ quiz }) => {
     }).format(new Date(date));
 
     return formattedDate;
+  }
+
+  const handleDelete = (e)=>{
+    e.preventDefault();
+    Store.dispatch(deleteQuiz(quiz._id))
   }
 
   return (
@@ -111,7 +127,7 @@ const AdminQuizView = ({ quiz }) => {
             <button
               className="mt-2 mb-2 text-sm shadow-2xl bg-red-600 hover:bg-white hover:text-red-600 py-2 px-2
           hover:border-2 hover:border-red-600 text-white font-bold rounded-xl md:py-2 md:px-4 md-rounded-xl md:shadow md:mt-5 md:mb-3 md:text-base"
-              onClick={() => {}}
+              onClick={(e) => {handleDelete(e)}}
             >
               Delete Quiz
             </button>

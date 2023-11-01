@@ -2,6 +2,14 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { SERVER } from "../../Server";
 
+const suffel = (data) => {
+  const a =  data
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
+    return a;
+};
+
 // get all quiz
 export const getAllQuiz = () => async (dispatch) => {
   try {
@@ -41,6 +49,50 @@ export const getOneQuiz = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getOneQuizFailed",
+      payload: error.response?.data.message,
+    });
+  }
+};
+
+// delete quiz
+export const deleteQuiz = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "deleteQuizRequest",
+    });
+
+    const { data } = await axios.delete(`${SERVER}/quiz/delete-quiz/${id}`, {
+      withCredentials: true,
+    });
+    dispatch({
+      type: "deleteQuizSuccess",
+      payload: id
+    });
+  } catch (error) {
+    dispatch({
+      type: "deleteQuizFailed",
+      payload: error.response?.data.message,
+    });
+  }
+};
+
+// delete quiz
+export const deleteQuestion = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "deleteQestionRequest",
+    });
+
+    const { data } = await axios.delete(`${SERVER}/question/delete-question/${id}`, {
+      withCredentials: true,
+    });
+    dispatch({
+      type: "deleteQestionSuccess",
+      payload: id
+    });
+  } catch (error) {
+    dispatch({
+      type: "deleteQestionFailed",
       payload: error.response?.data.message,
     });
   }
@@ -89,7 +141,7 @@ export const startQuiz = (id) => async (dispatch) => {
     dispatch({
       type: "startQuizSuccess",
       payload: {
-        questions: data.questions,
+        questions: suffel(data.questions),
         startTime: data.startTime
       },
     });
@@ -103,8 +155,7 @@ export const startQuiz = (id) => async (dispatch) => {
 };
 
 // get all quiz
-export const submitQuiz = (id, d) => async (dispatch) => {
-  console.log(d, id)
+export const submitQuiz = (id, d, count) => async (dispatch) => {
   try {
     dispatch({
       type: "submitQuizRequest",
@@ -112,7 +163,8 @@ export const submitQuiz = (id, d) => async (dispatch) => {
 
     const { data } = await axios.post(`${SERVER}/register/submit-quiz/${id}`,{
       time: new Date(),
-      questions: d
+      questions: d,
+      tabSwitch: count
     },{
       withCredentials: true,
     });
@@ -122,8 +174,6 @@ export const submitQuiz = (id, d) => async (dispatch) => {
       payload: data.register
     });
   } catch (error) {
-    console.log(error)
-    console.log(123456)
     toast.success(error?.response?.data?.message)
     dispatch({
       type: "submitQuizFailed",
@@ -135,7 +185,6 @@ export const submitQuiz = (id, d) => async (dispatch) => {
 
 // all user
 export const getQuestionAdmin = (id) => async (dispatch) => {
-  console.log(id);
   try {
     dispatch({
       type: "GetQuestionAdminRequest",

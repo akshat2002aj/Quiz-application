@@ -100,7 +100,6 @@ const AdminCreateQuiz = () => {
           }) => {
             const { name, description, duration, image, startTime, endTime } =
               values;
-            console.log(values);
             return (
               <Form>
                 <Input

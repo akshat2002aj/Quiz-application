@@ -13,7 +13,6 @@ const AdminQuizQuestionPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { allQuestion, isLoading } = useSelector((state) => state.quiz);
-  console.log(allQuestion);
   useEffect(() => {
     Store.dispatch(getQuestionAdmin(id));
   }, []);

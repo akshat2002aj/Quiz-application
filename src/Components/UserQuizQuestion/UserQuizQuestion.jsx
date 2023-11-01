@@ -5,8 +5,16 @@ import { useSelector } from "react-redux";
 import ThankYouPage from "../../Pages/ThankYouPage";
 import Loading from "../Layout/Loading/Loading";
 import BasicModal from "../Layout/Modal/Modal";
+import toast from "react-hot-toast";
+import { Alert } from "@mui/material";
 // import { Radio } from "@material-tailwind/react";
-const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
+const UserQuizQuestion = ({
+  questions,
+  id,
+  timeOver,
+  setTimeOver,
+  handle,
+}) => {
   const { submitted, result } = useSelector((state) => state.quiz);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [thank, setThank] = useState(false);
@@ -19,8 +27,35 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
     setSelectedOption(option);
   };
 
+  const [tabSwitchCount, setTabSwitchCount] = useState(0);
+function handleVisibilityChange() {
+  if (document.hidden) {
+    setTabSwitchCount((prev) => prev + 1);
+  }
+  if(tabSwitchCount > 0 && !document.hidden){
+    toast.error("1. Tab switch is not allowed")
+  }
+}
+
+useEffect(() => {
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+
+  return () => {
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
+  };
+}, []);
+
+useEffect(() => {
+  if(tabSwitchCount === 3){
+    toast.error("Quiz is Submitted because of more tab switches")
+    handleSubmit();
+  }else{
+    toast.error("Tab switch is not allowed")
+  }
+}, [tabSwitchCount]);
+
+
   useEffect(() => {
-    console.log(submitted, result);
     if (submitted || result) {
       setTimeOver(true);
       setLoading(false);
@@ -30,7 +65,6 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
 
   useEffect(() => {
     if (timeOver) {
-      console.log(12345);
       handleSubmit();
     }
   }, [timeOver]);
@@ -98,7 +132,7 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
       question: questions[currentQuestion]._id,
       correctOption: selectedOption === -1 ? -1 : selectedOption + 1,
     };
-    Store.dispatch(submitQuiz(id, updatedStatus));
+    Store.dispatch(submitQuiz(id, updatedStatus, tabSwitchCount));
   };
 
   const [visibleQuestions, setVisibleQuestions] = useState(20);
@@ -144,7 +178,7 @@ const UserQuizQuestion = ({ questions, id, timeOver, setTimeOver, handle }) => {
                 )}
               </div>
               {/* <ul className="list-disc pl-4 mb-8 text-lg"> */}
-              {questions[currentQuestion].options.map((option, index) => (
+              {questions[currentQuestion]?.options.map((option, index) => (
                 // <li key={index}>
 
                 <label

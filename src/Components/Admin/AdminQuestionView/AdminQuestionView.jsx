@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { BsArrowRightCircle, BsArrowLeftCircle } from "react-icons/bs";
+import { deleteQuestion } from "../../../Redux/Actions/quiz";
+import Store from "../../../Redux/Store";
 const AdminQuestionView = (props) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  console.log(123)
-  console.log(props.questions)
+
 
   const handleNextQuestion = () => {
     if (currentQuestion + 1 < props.questions.length) {
@@ -16,6 +17,10 @@ const AdminQuestionView = (props) => {
       setCurrentQuestion(currentQuestion - 1);
     }
   };
+  const handleDelete = (e)=>{
+    e.preventDefault();
+    Store.dispatch(deleteQuestion(props.questions[currentQuestion]._id))
+  }
   return (
     <div className="flex items-center justify-center mt-4">
       <div className="flex flex-col  bg-slate-50  border border-gray-200 shadow-lg mx-0  py-8 px-4 md:p-8 rounded-3xl  mt-4 w-full md:mx-0 md:w-[80%] ">
@@ -109,7 +114,7 @@ const AdminQuestionView = (props) => {
               <button className="shadow-2xl bg-indigo-600 hover:bg-white hover:text-indigo-600 text-white font-bold text-sm md:py-2 py-2 md:px-6 px-5 rounded-xl focus:outline hover:border-2 hover:border-indigo-600">
                 Edit
               </button>
-              <button className="shadow-2xl bg-[crimson] text-sm hover:bg-white hover:text-[crimson] text-white font-bold md:py-2 py-2 px-4 md:px-6 rounded-xl focus:outline hover:border-2 hover:border-[crimson] ">
+              <button onClick={handleDelete} className="shadow-2xl bg-[crimson] text-sm hover:bg-white hover:text-[crimson] text-white font-bold md:py-2 py-2 px-4 md:px-6 rounded-xl focus:outline hover:border-2 hover:border-[crimson] ">
                 Delete
               </button>
             </div>

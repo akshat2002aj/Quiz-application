@@ -4,13 +4,15 @@ const initialState = {
   isLoading: true,
   loader: true,
   load: true,
-  submitted: false
+  submitted: false,
+  deleted: false,
 };
 
 export const quizReducer = createReducer(initialState, {
   // get all quiz
   getAllQuizRequest: (state) => {
     state.isLoading = true;
+    state.deleted = false;
   },
   getAllQuizSuccess: (state, action) => {
     state.isLoading = false;
@@ -24,12 +26,27 @@ export const quizReducer = createReducer(initialState, {
   // get all quiz
   getOneQuizRequest: (state) => {
     state.isLoading = true;
+    state.deleted = false;
   },
   getOneQuizSuccess: (state, action) => {
     state.isLoading = false;
     state.quiz = action.payload;
   },
   getOneQuizFailed: (state, action) => {
+    state.isLoading = false;
+    state.error = action.payload;
+  },
+
+  // delete quiz
+  deleteQuizRequest: (state) => {
+    state.isLoading = true;
+  },
+  deleteQuizSuccess: (state, action) => {
+    state.isLoading = false;
+    state.deleted = true;
+    state.allQuiz = state.allQuiz.filter((i) => i._id !== action.payload);
+  },
+  deleteQuizFailed: (state, action) => {
     state.isLoading = false;
     state.error = action.payload;
   },
@@ -86,6 +103,22 @@ export const quizReducer = createReducer(initialState, {
     state.allQuestion = action.payload;
   },
   GetQuestionAdminFail: (state, action) => {
+    state.isLoading = false;
+    state.error = action.payload;
+  },
+
+  // delete quiz
+  deleteQestionRequest: (state) => {
+    state.isLoading = true;
+  },
+  deleteQestionSuccess: (state, action) => {
+    state.isLoading = false;
+    // state.deleted = true;
+    state.allQuestion = state.allQuestion.filter(
+      (i) => i._id !== action.payload
+    );
+  },
+  deleteQestionFailed: (state, action) => {
     state.isLoading = false;
     state.error = action.payload;
   },

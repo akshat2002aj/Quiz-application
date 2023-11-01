@@ -24,11 +24,9 @@ export default function Register() {
       }, {
         withCredentials: true
       })
-      console.log(data);
       toast.success(data.data.message)
       setLoading(false);
     } catch (error) {
-      console.log(error)
       toast.error(error?.response?.data?.message)
       setLoading(false);
     }

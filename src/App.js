@@ -43,21 +43,6 @@ function App() {
   //     window.removeEventListener('contextmenu', handleBlockInspect);
   //   }
   // },[])
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      console.log(e.key);
-      if (e.key === 'Escape' || e.key === 'Win' || e.key === 'F12') {
-        console.log("are you sure?")
-        e.preventDefault();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
   return (
     <>
       {loading ? (

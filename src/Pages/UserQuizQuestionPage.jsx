@@ -1,5 +1,5 @@
 import UserQuizQuestion from "../Components/UserQuizQuestion/UserQuizQuestion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Component } from "react";
 import Header from "../Components/Layout/Header/Header";
 import Store from "../Redux/Store";
 import { useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import {
   useFullScreenHandle,
 } from "react-full-screen";
 import "../App.css";
+import TabVisibilityDetector from "./TabVisibilityDetector";
 
 const UserQuizViewPage = () => {
   const handle = useFullScreenHandle();
@@ -31,7 +32,6 @@ const UserQuizViewPage = () => {
         const data = Timer(start.startTime, quiz.duration);
         setTimeLeft(data);
         if (data == "00:00:00") {
-          console.log("message");
           setTimeOver(true);
           clearInterval(countdownInterval);
           countdownInterval = null;
@@ -57,13 +57,16 @@ const UserQuizViewPage = () => {
           {loader ? (
             <Loader />
           ) : start ? (
-            <UserQuizQuestion
-              questions={start.questions}
-              id={id}
-              setTimeOver={setTimeOver}
-              timeOver={timeOver}
-              handle = {handle}
-            />
+            <>
+              <TabVisibilityDetector />
+              <UserQuizQuestion
+                questions={start.questions}
+                id={id}
+                setTimeOver={setTimeOver}
+                timeOver={timeOver}
+                handle={handle}
+              />
+            </>
           ) : null}
         </div>
       </div>

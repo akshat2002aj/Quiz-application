@@ -109,7 +109,6 @@ const AdminAddQuestion = ({ quiz }) => {
       ],
       correctOption: +values.correctoption,
     };
-    console.log(data);
     try {
       const d = await axios.post(
         `https://treasure-hunt-tcb7.onrender.com/api/v1/question/create-question/${quiz._id}`,
@@ -133,14 +132,14 @@ const AdminAddQuestion = ({ quiz }) => {
       setQuestion({ ...question, [e.target.name]: e.target.files[0] });
     }
 
-    console.log(fieldName)
+    // console.log(fieldName)
 
     const reader = new FileReader();
 
     reader.onload = () => {
       if (reader.readyState === 2) {
-        console.log(1, fieldName);
-        console.log(reader.result);
+        // console.log(1, fieldName);
+        // console.log(reader.result);
         // setQuestion({ ...question, [e.target.name]: reader.result });
         setFieldValue(fieldName, reader.result)
       }
@@ -164,7 +163,6 @@ const AdminAddQuestion = ({ quiz }) => {
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
               handleSubmit(values, { setSubmitting });
-              console.log(123)
             }}
           >
             {({
@@ -179,7 +177,7 @@ const AdminAddQuestion = ({ quiz }) => {
               // isValid
             }) => {
               console.log(errors)
-              console.log(values)
+
               const { description, imgdescp,  option1, option2, option3, option4, imgoption1, imgoption2, imgoption3, imgoption4, correctoption } = values;
               return (
                 <Form>

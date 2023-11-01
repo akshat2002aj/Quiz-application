@@ -31,9 +31,9 @@ const AdminDashboard = () => {
           <div className="md:w-full flex flex-col justify-center w-[80%]">
             <div className="flex flex-wrap justify-center items-center mt-3 gap-7">
               {myArray.map((i,index) => {
-                return (
+                return (<>
                   <DashBoardCard data={i} key={index} id={index} />
-                )
+                </>)
               })}
             </div>
             {/* <div className="bg-gray-300 mt-8 rounded-3xl">

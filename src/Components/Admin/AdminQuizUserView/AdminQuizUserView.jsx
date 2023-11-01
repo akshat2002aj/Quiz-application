@@ -63,6 +63,12 @@ const AdminQuizUserView = ({users}) => {
       },
     },
     {
+      id: "tabSwitch",
+      label: "Tab Switch",
+      minWidth: 100,
+      align: "center",
+      },
+    {
       id: "actions",
       label: "Actions",
       minWidth: 100,
@@ -162,7 +168,14 @@ const AdminQuizUserView = ({users}) => {
                               {<div className={`font-bold ${value === 'Registered' ? 'text-pink-400': (value === "Processing" ? 'text-yellow-400' : 'text-green-400')}`}>{value}</div>}
                             </TableCell>
                           );
-                        } else if(column.id === "timeTaken") {
+                        } else if (column.id === "tabSwitch") {
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {<div className={`font-bold text-xl ${value >= 3 ? 'text-red-400': null}`}>{value}</div>}
+                            </TableCell>
+                          );
+                        }
+                         else if(column.id === "timeTaken") {
                           return (
                             <TableCell key={column.id} align={column.align}>
                               {
