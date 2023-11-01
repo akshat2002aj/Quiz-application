@@ -74,36 +74,27 @@ const UserQuizView = ({ quiz, handle, setQuizHandle }) => {
               <div>
                 <h1 className="text-2xl text-extrabold">Rules:</h1>
                 <ul className="text-gray-700">
-                  <li>1. Only individual participation is permitted.</li>
                   <li>
-                    2. Registration for the event is entirely free of charge
+                    1. Registration for the event is entirely free of charge
                   </li>
                   <li>
-                    3. Participants must arrive at the event venue at least 10
-                    minutes prior to the scheduled start time.
-                  </li>
-                  <li>
-                    4. It is mandatory for participants to bring their own
-                    laptops and chargers
-                  </li>
-                  <li>
-                    5. Participants are not permitted to leave the event venue
+                    2. Participants are not permitted to leave the event venue
                     during the competition
                   </li>
                   <li>
-                    6. The use of multiple browser tabs or windows is strictly
-                    prohibited during the event.
+                    3. Participants must refrain from exiting full-screen mode, switching tabs, or utilizing multiple browser screens during the quiz; 
+                    should any of these actions be repeated beyond a predetermined limit, the quiz will be automatically submitted.
                   </li>
                   <li>
-                    7. Mobile phones are strictly prohibited for any purpose
+                    4. Other electronic devices are strictly prohibited for any purpose
                     during the competition
                   </li>
                   <li>
-                    8. Participants encountering challenges may opt to request
+                    5. Participants encountering challenges may opt to request
                     hints.
                   </li>
                   <li>
-                    9. Assistance from any external sources or individuals is
+                    6. Assistance from any external sources or individuals is
                     strictly prohibited during the competition.
                   </li>
                 </ul>

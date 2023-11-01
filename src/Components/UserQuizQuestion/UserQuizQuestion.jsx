@@ -7,7 +7,6 @@ import Loading from "../Layout/Loading/Loading";
 import BasicModal from "../Layout/Modal/Modal";
 import toast from "react-hot-toast";
 import { Alert } from "@mui/material";
-// import { Radio } from "@material-tailwind/react";
 const UserQuizQuestion = ({
   questions,
   id,
@@ -21,6 +20,7 @@ const UserQuizQuestion = ({
   const [loading, setLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState(-1);
   const [questionStatus, setQuestionStatus] = useState([]);
+  const [error, setError] = useState("")
   const [open, setOpen] = useState(false);
 
   const handleOptionSelect = (option) => {
@@ -33,7 +33,10 @@ function handleVisibilityChange() {
     setTabSwitchCount((prev) => prev + 1);
   }
   if(tabSwitchCount > 0 && !document.hidden){
-    toast.error("1. Tab switch is not allowed")
+    setError("Tab switch is not allowed.")
+    setInterval(()=>{
+      setError("")
+    },[5000])
   }
 }
 
@@ -46,11 +49,8 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-  if(tabSwitchCount === 3){
-    toast.error("Quiz is Submitted because of more tab switches")
+  if(tabSwitchCount === 5){
     handleSubmit();
-  }else{
-    toast.error("Tab switch is not allowed")
   }
 }, [tabSwitchCount]);
 
@@ -72,6 +72,7 @@ useEffect(() => {
   useEffect(() => {
     if (!handle.active) {
       // handle.enter();
+      setTabSwitchCount((prev) => prev + 1);
       setOpen(true);
     }
   }, [handle.active]);
@@ -156,6 +157,7 @@ useEffect(() => {
         <ThankYouPage id={id} setLoading={setLoading} />
       ) : (
         <div className="flex justify-center align-center flex-col w-full md:w-[90%] mb-10 mt-10">
+          {error.length>0 ? <p className="mb-5 text-[crimson] text-xl self-center">&#10060; {error}</p> : null}
           <div className="flex flex-row justify-center">
             <div className="self-center bg-slate-100  border border-gray-100 shadow-lg p-4 rounded-xl sm:px-10 md:w-full w-[75%] ">
               <div className="flex flex-col  sm:flex-row sm:justify-between sm:items-center">
