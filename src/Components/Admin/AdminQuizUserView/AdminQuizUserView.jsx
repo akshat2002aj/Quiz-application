@@ -146,7 +146,7 @@ const AdminQuizUserView = ({users}) => {
             <TableBody>
               {sortedUsers
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((sortedUsers, index) => {
+                ?.map((sortedUsers, index) => {
                   return (
                     <TableRow
                       hover
@@ -189,14 +189,14 @@ const AdminQuizUserView = ({users}) => {
                         else if(column.id === "name") {
                           return (
                             <TableCell key={column.id} align={column.align}>
-                                {sortedUsers.user.name}
+                                {sortedUsers.user?.name}
                             </TableCell>
                           );
                         }
                         else if(column.id === "email") {
                           return (
                             <TableCell key={column.id} align={column.align}>
-                                {sortedUsers.user.email}
+                                {sortedUsers.user?.email}
                             </TableCell>
                           );
                         }
